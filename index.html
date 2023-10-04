@@ -1,0 +1,156 @@
+<!-- 
+  Copyright © [2023] [Dustin_Chen]. All rights reserved.
+  Author: Dustin_Chen
+  Email:  Dustin_Chen@compal.com or chuhpsdustin@gmail.com
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>[bbuiolog] SNR, RSSI actual value Calculator</title>
+    <style>
+        .result {
+            margin-left: 10px;
+        }
+
+        body {
+            font-size: 16px;
+            font-family: Roboto, sans-serif;
+        }
+
+        li {
+            margin-bottom: 3px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+        }
+    </style>
+    <script>
+        function calculate(parameter) {
+            if (parameter === "snr1") {
+                var crcIndSNR = parseFloat(document.getElementById("crcIndSNR").value);
+                document.getElementById("crcIndActualSNR").innerHTML = "Actual SNR(dB): " + (crcIndSNR * 0.5 - 64);
+            } else if (parameter === "snr2") {
+                var ulCqiSNR = parseFloat(document.getElementById("ulCqiSNR").value);
+                document.getElementById("ulCqiActualSNR").innerHTML = "Actual SNR(dB): " + (ulCqiSNR * 0.5 - 64);
+            } else if (parameter === "snr3") {
+                var pucchSINR = parseFloat(document.getElementById("pucchSINR").value);
+                document.getElementById("pucchSINRActualSNR").innerHTML = "Actual SINR(dB): " + (pucchSINR * 0.5 - 64);
+            } else if (parameter === "rssi1") {
+                var rachIndRSSI = parseFloat(document.getElementById("rachIndRSSI").value);
+                document.getElementById("rachIndActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (rachIndRSSI * 0.5 -
+                    127.5);
+            } else if (parameter === "rssi2") {
+                var crcIndRSSI = parseFloat(document.getElementById("crcIndRSSI").value);
+                document.getElementById("crcIndActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (crcIndRSSI * 0.5 -
+                    127.5);
+            } else if (parameter === "rssi3") {
+                var pucchRSSI = parseFloat(document.getElementById("pucchRSSI").value);
+                document.getElementById("pucchRSSIActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (pucchRSSI * 0.5 -
+                    127.5);
+            } else if (parameter === "rssi4") {
+                var receivedNoiseInterferencePower = parseFloat(document.getElementById(
+                    "receivedNoiseInterferencePower").value);
+                document.getElementById("receivedNoiseInterferencePowerActualRSSI").innerHTML =
+                    "Actual Received Noise and Interference Power(dBFS): " + (receivedNoiseInterferencePower * 0.5 -
+                        127.5);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>[bbuiolog] SNR, RSSI actual value Calculator</h1>
+    <p style="margin: 0;">Author: Dustin_Chen, email: <a href="mailto:Dustin_Chen@compal.com"
+            style="line-height: 1;">Dustin_Chen@compal.com</a> or <a href="mailto:chuhpsdustin@gmail.com"
+            style="line-height: 1;">chuhpsdustin@gmail.com</a></p>
+
+    <ul>
+        <li>
+            <strong>SNR Calculation</strong>
+            <ul>
+                <li>
+                    [CRC.ind] => <label for="crcIndSNR" style="color: red;">Effective SNR:</label>
+                    <input type="number" id="crcIndSNR" min="0" max="255" value="159">
+                    <button onclick="calculate('snr1')">Calculate</button>
+                    <span class="result" id="crcIndActualSNR"></span><br>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    [RX_ULSCH.ind] => <label for="ulCqiSNR" style="color: red;">UL_CQI:</label>
+                    <input type="number" id="ulCqiSNR" min="0" max="255" value="159">
+                    <button onclick="calculate('snr2')">Calculate</button>
+                    <span class="result" id="ulCqiActualSNR"></span><br>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    [HARQ.ind] => <label for="pucchSINR" style="color: red;">PUCCH SINR:</label>
+                    <input type="number" id="pucchSINR" min="0" max="255" value="159">
+                    <button onclick="calculate('snr3')">Calculate</button>
+                    <span class="result" id="pucchSINRActualSNR"></span><br>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <strong>RSSI Calculation</strong>
+            <ul>
+                <li>
+                    [RACH.ind] => <label for="rachIndRSSI" style="color: red;">Per resource RSSI:</label>
+                    <input type="number" id="rachIndRSSI" min="0" max="255" value="68">
+                    <button onclick="calculate('rssi1')">Calculate</button>
+                    <span class="result" id="rachIndActualRSSI"></span><br>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    [CRC.ind] => <label for="crcIndRSSI" style="color: red;">RSSI:</label>
+                    <input type="number" id="crcIndRSSI" min="0" max="255" value="42">
+                    <button onclick="calculate('rssi2')">Calculate</button>
+                    <span class="result" id="crcIndActualRSSI"></span><br>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    [HARQ.ind] => <label for="pucchRSSI" style="color: red;">PUCCH RSSI:</label>
+                    <input type="number" id="pucchRSSI" min="0" max="255" value="97">
+                    <button onclick="calculate('rssi3')">Calculate</button>
+                    <span class="result" id="pucchRSSIActualRSSI"></span><br>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    [CRC.ind] => <label for="receivedNoiseInterferencePower" style="color: red;">Received Noise and Interference
+                        Power:</label>
+                    <input type="number" id="receivedNoiseInterferencePower" min="0" max="255" value="66">
+                    <button onclick="calculate('rssi4')">Calculate</button>
+                    <span class="result" id="receivedNoiseInterferencePowerActualRSSI"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <pre>
+======================================================================================
+(Note)
+	actual SNR(dB) = Effective SNR * 0.5 - 64
+	actual SNR(dB) = UL_CQI * 0.5 - 64
+	actual SINR (dB) = Effective SNR * 0.5 - 64
+	
+	actual RSSI (dBFS) = RSSI * 0.5 - 127.5
+	actual RSSI (dBFS) = Per resource RSSI * 0.5 - 127.5
+	actual RSSI (dBFS) = PUCCH RSSI * 0.5 - 127.5
+	actual Received Noise and Interference Power (dBFS) = IE *0.5 - 127.5
+======================================================================================
+</pre>
+</body>
+
+</html>
