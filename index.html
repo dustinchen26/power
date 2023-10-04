@@ -31,28 +31,56 @@
         function calculate(parameter) {
             if (parameter === "snr1") {
                 var crcIndSNR = parseFloat(document.getElementById("crcIndSNR").value);
+				if (isNaN(crcIndSNR) || crcIndSNR < 0 || crcIndSNR > 255) {
+					alert("Please input Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. ");
+					return;
+				}				
                 document.getElementById("crcIndActualSNR").innerHTML = "Actual SNR(dB): " + (crcIndSNR * 0.5 - 64);
             } else if (parameter === "snr2") {
                 var ulCqiSNR = parseFloat(document.getElementById("ulCqiSNR").value);
+				if (isNaN(ulCqiSNR) || ulCqiSNR < 0 || ulCqiSNR > 255) {
+					alert("Please input Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. ");
+					return;
+				}				
                 document.getElementById("ulCqiActualSNR").innerHTML = "Actual SNR(dB): " + (ulCqiSNR * 0.5 - 64);
             } else if (parameter === "snr3") {
                 var pucchSINR = parseFloat(document.getElementById("pucchSINR").value);
+				if (isNaN(pucchSINR) || pucchSINR < 0 || pucchSINR > 255) {
+					alert("Please input Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. ");
+					return;
+				}				
                 document.getElementById("pucchSINRActualSNR").innerHTML = "Actual SINR(dB): " + (pucchSINR * 0.5 - 64);
             } else if (parameter === "rssi1") {
                 var rachIndRSSI = parseFloat(document.getElementById("rachIndRSSI").value);
+				if (isNaN(rachIndRSSI) || rachIndRSSI < 0 || rachIndRSSI > 255) {
+					alert("Please input Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. ");
+					return;
+				}					
                 document.getElementById("rachIndActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (rachIndRSSI * 0.5 -
                     127.5);
             } else if (parameter === "rssi2") {
                 var crcIndRSSI = parseFloat(document.getElementById("crcIndRSSI").value);
+				if (isNaN(crcIndRSSI) || crcIndRSSI < 0 || crcIndRSSI > 255) {
+					alert("Please input Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. ");
+					return;
+				}					
                 document.getElementById("crcIndActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (crcIndRSSI * 0.5 -
                     127.5);
             } else if (parameter === "rssi3") {
                 var pucchRSSI = parseFloat(document.getElementById("pucchRSSI").value);
+				if (isNaN(pucchRSSI) || pucchRSSI < 0 || pucchRSSI > 255) {
+					alert("Please input Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. ");
+					return;
+				}					
                 document.getElementById("pucchRSSIActualRSSI").innerHTML = "Actual RSSI(dBFS): " + (pucchRSSI * 0.5 -
                     127.5);
             } else if (parameter === "rssi4") {
                 var receivedNoiseInterferencePower = parseFloat(document.getElementById(
                     "receivedNoiseInterferencePower").value);
+				if (isNaN(receivedNoiseInterferencePower) || receivedNoiseInterferencePower < 0 || receivedNoiseInterferencePower > 255) {
+					alert("Please input Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. ");
+					return;
+				}						
                 document.getElementById("receivedNoiseInterferencePowerActualRSSI").innerHTML =
                     "Actual Received Noise and Interference Power(dBFS): " + (receivedNoiseInterferencePower * 0.5 -
                         127.5);
@@ -67,6 +95,18 @@
             style="line-height: 1;">Dustin_Chen@compal.com</a> or <a href="mailto:chuhpsdustin@gmail.com"
             style="line-height: 1;">chuhpsdustin@gmail.com</a></p>
 
+
+
+    <ul>
+        <li>
+			<strong>Refer document: </strong>
+			<ul>
+                <li>
+                    NR_gNB_L1_API_Definition_v3p2_release.pdf
+                </li>
+            </ul>
+        </li>	
+    </ul>		
     <ul>
         <li>
             <strong>SNR Calculation</strong>
@@ -139,17 +179,31 @@
         </li>
     </ul>
     <pre>
-======================================================================================
+======================================================================================================================================
 (Note)
-	actual SNR(dB) = Effective SNR * 0.5 - 64
-	actual SNR(dB) = UL_CQI * 0.5 - 64
-	actual SINR (dB) = Effective SNR * 0.5 - 64
+【計算 SNR】
+  1. [CRC.ind] Effective SNR => Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. 
+     actual SNR(dB) = (Effective SNR) * 0.5 - 64
+		
+  2. [RX_ULSCH.ind] UL_CQI => Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. 
+     actual SNR(dB) = (UL_CQI) * 0.5 - 64
 	
-	actual RSSI (dBFS) = RSSI * 0.5 - 127.5
-	actual RSSI (dBFS) = Per resource RSSI * 0.5 - 127.5
-	actual RSSI (dBFS) = PUCCH RSSI * 0.5 - 127.5
-	actual Received Noise and Interference Power (dBFS) = IE *0.5 - 127.5
-======================================================================================
+  3. [HARQ.ind] PUCCH SINR => Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size. 
+     actual SINR(dB) = (Effective SNR) * 0.5 - 64
+		
+【計算 RSSI】
+  4. [RACH.ind] Per resource RSSI => Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. 
+     actual RSSI(dBFS) = (RSSI) * 0.5 - 127.5
+		
+  5. [CRC.ind] RSSI => Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. 
+     actual RSSI(dBFS) = (Per resource RSSI) * 0.5 - 127.5
+		
+  6. [HARQ.ind] PUCCH RSSI => Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. 
+     actual RSSI(dBFS) = (PUCCH RSSI) * 0.5 - 127.5
+	
+  7. [CRC.ind] Received Noise and Interference Power => Value: 0-255, representing -127.5 dBFS up to 0 dBFS, with 0.5 dB step size. 
+     actual Received Noise and Interference Power(dBFS) = (Received Noise and Interference Power) *0.5 - 127.5
+======================================================================================================================================
 </pre>
 </body>
 
